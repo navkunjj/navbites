@@ -147,7 +147,7 @@ const Navbar = ({ cartCount, onCartClick, user, onLogout, searchTerm, onSearchCh
       </div>
 
       {/* Mobile Menu Overlay */}
-      <div className={`fixed inset-0 bg-black/95 backdrop-blur-lg z-40 transition-transform duration-300 md:hidden overflow-y-auto flex ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div className={`fixed inset-0 bg-black/95 backdrop-blur-lg z-4000 transition-transform duration-300 md:hidden overflow-y-auto flex ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="m-auto flex flex-col items-center w-full py-10 space-y-8">
           {/* Mobile Search */}
           <div className="flex items-center bg-white/5 border border-white/10 rounded-full px-4 py-3 focus-within:border-premium-gold/50 transition-all w-64">
