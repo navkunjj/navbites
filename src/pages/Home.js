@@ -27,6 +27,10 @@ const Home = () => {
         const res = await fetch(`${API_URL}/api/auth/me`, {
             headers: { 'x-auth-token': token }
         });
+        if (res.status === 401) {
+            handleLogout();
+            return;
+        }
         const data = await res.json();
         if (data.tokens !== undefined) {
             setUser(data);
@@ -102,9 +106,18 @@ const Home = () => {
             },
             body: JSON.stringify(dish)
         });
-        const updatedCart = await res.json();
-        setCartItems(updatedCart);
-        showNotification(`${dish.title} added to cart!`);
+        if (res.status === 401) {
+            handleLogout();
+            showNotification("Session expired. Please login again.");
+            return;
+        }
+        if (res.ok) {
+            const updatedCart = await res.json();
+            setCartItems(updatedCart);
+            showNotification(`${dish.title} added to cart!`);
+        } else {
+             console.error("Failed to add to cart");
+        }
       } catch (err) {
           console.error("Error adding to cart", err);
       }
@@ -134,8 +147,14 @@ const Home = () => {
                 method: 'DELETE',
                 headers: { 'x-auth-token': token }
             });
-            const updatedCart = await res.json();
-            setCartItems(updatedCart);
+            if (res.status === 401) {
+                handleLogout();
+                return;
+            }
+            if (res.ok) {
+                 const updatedCart = await res.json();
+                 setCartItems(updatedCart);
+            }
         } catch (err) {
             console.error("Error removing from cart", err);
         }
@@ -242,7 +261,24 @@ const Home = () => {
   };
 
   return (
-    <div className="bg-premium-black min-h-screen text-white selection:bg-premium-gold selection:text-black font-sans">
+    <div className="bg-premium-black min-h-screen text-white selection:bg-premium-gold selection:text-black font-sans relative overflow-hidden">
+      {/* Background Depth Effects */}
+      <div className="fixed inset-0 pointer-events-none">
+          <div className="absolute top-[-10%] left-[-10%] w-[40rem] h-[40rem] bg-premium-gold/10 rounded-full blur-[120px] mix-blend-screen animate-pulse duration-[10000ms]"></div>
+          <div className="absolute top-[20%] right-[-5%] w-[35rem] h-[35rem] bg-premium-emerald/10 rounded-full blur-[100px] mix-blend-screen"></div>
+          <div className="absolute bottom-[-10%] left-[20%] w-[45rem] h-[45rem] bg-purple-900/10 rounded-full blur-[130px] mix-blend-screen"></div>
+          
+          {/* Dish Depth Layer */}
+          <div className="absolute top-[10%] right-[10%] w-[50rem] h-[50rem] opacity-20 pointer-events-none">
+             <img 
+                src="/images/hero_dish.png" 
+                alt="" 
+                className="w-full h-full object-contain blur-[100px] scale-150 animate-pulse-slow mix-blend-overlay"
+             />
+          </div>
+      </div>
+
+      <div className="relative z-10">
       <Navbar 
         cartCount={cartItems.length} 
         onCartClick={() => setIsCartOpen(true)}
@@ -296,6 +332,7 @@ const Home = () => {
           </svg>
           {notification.message}
         </div>
+      </div>
       </div>
     </div>
   );

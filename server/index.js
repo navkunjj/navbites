@@ -7,15 +7,22 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: '*', // later replace with your frontend URL
+}));
+
 
 // Database Connection
 // Use local mongodb by default if no env provided
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/food_delivery_db';
+if (!process.env.MONGO_URI) {
+    throw new Error('MONGO_URI is not defined');
+}
 
-mongoose.connect(MONGO_URI)
+mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.error('MongoDB Connection Error:', err));
+
+
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
@@ -23,6 +30,9 @@ app.use('/api/cart', require('./routes/cart'));
 app.use('/api/orders', require('./routes/order'));
 app.use('/api/admin', require('./routes/admin'));
 app.use('/api/dishes', require('./routes/dishes'));
+app.get('/', (req, res) => {
+    res.send('Backend is running 🚀');
+});
 
 const PORT = process.env.PORT || 5000;
 

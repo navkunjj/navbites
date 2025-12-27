@@ -31,7 +31,7 @@ router.get('/stats', adminAuth, async (req, res) => {
         });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send(err.message);
     }
 });
 
@@ -46,7 +46,7 @@ router.get('/orders', adminAuth, async (req, res) => {
         res.json(orders);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send(err.message);
     }
 });
 
@@ -71,7 +71,7 @@ router.put('/orders/:id/status', adminAuth, async (req, res) => {
         res.json(updatedOrder);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send(err.message);
     }
 });
 
@@ -96,7 +96,7 @@ router.delete('/orders/:id', adminAuth, async (req, res) => {
         res.json({ msg: 'Order cancelled and tokens refunded' });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send(err.message);
     }
 });
 
@@ -111,7 +111,7 @@ router.get('/users', adminAuth, async (req, res) => {
         res.json(users);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send(err.message);
     }
 });
 
@@ -130,7 +130,7 @@ router.get('/users/:id', adminAuth, async (req, res) => {
         res.json({ user, orders });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send(err.message);
     }
 });
 
@@ -157,7 +157,7 @@ router.put('/users/:id', adminAuth, async (req, res) => {
         res.json(updatedUser);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send(err.message);
     }
 });
 
@@ -177,7 +177,7 @@ router.delete('/users/:id', adminAuth, async (req, res) => {
         res.json({ msg: 'User deactivated successfully' });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send(err.message);
     }
 });
 
@@ -190,7 +190,7 @@ router.get('/dishes', adminAuth, async (req, res) => {
         res.json(dishes);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send(err.message);
     }
 });
 
@@ -214,7 +214,7 @@ router.post('/dishes', adminAuth, async (req, res) => {
         res.json(newDish);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send(err.message);
     }
 });
 
@@ -242,7 +242,7 @@ router.put('/dishes/:id', adminAuth, async (req, res) => {
         res.json(dish);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send(err.message);
     }
 });
 
@@ -260,7 +260,7 @@ router.delete('/dishes/:id', adminAuth, async (req, res) => {
         res.json({ msg: 'Dish deleted successfully' });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send(err.message);
     }
 });
 

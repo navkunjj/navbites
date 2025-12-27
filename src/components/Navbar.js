@@ -102,7 +102,7 @@ const Navbar = ({ cartCount, onCartClick, user, onLogout, searchTerm, onSearchCh
                   <button 
                     onClick={onTopUp}
                     className="ml-2 w-5 h-5 flex items-center justify-center bg-premium-gold text-black rounded-full text-xs hover:bg-yellow-500 transition-colors shadow-sm"
-                    title="Top up tokens"
+                    title="Top up coins"
                   >
                     +
                   </button>

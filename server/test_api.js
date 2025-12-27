@@ -28,7 +28,7 @@ async function testApi() {
         const getRes = await axios.get('http://localhost:5000/api/cart', {
             headers: { 'x-auth-token': token }
         });
-        
+
         if (getRes.data.length > 0 && getRes.data[0].title === 'Test Dish') {
             console.log('   Success! Item verified in cart.');
         } else {

@@ -29,7 +29,7 @@ const CheckoutModal = ({ isOpen, onClose, onConfirm, totalTokens }) => {
 
                     <div className="mb-8 p-4 bg-premium-gold/10 border border-premium-gold/20 rounded-2xl flex justify-between items-center">
                         <span className="text-gray-300">Amount to Pay</span>
-                        <span className="text-2xl font-bold text-premium-gold">{totalTokens} Tokens</span>
+                        <span className="text-2xl font-bold text-premium-gold">{totalTokens} Coins</span>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-6">
@@ -69,7 +69,7 @@ const CheckoutModal = ({ isOpen, onClose, onConfirm, totalTokens }) => {
                             type="submit"
                             className="w-full py-4 bg-premium-gold text-black font-bold uppercase tracking-wider rounded-xl hover:bg-yellow-500 transition-all hover:scale-[1.02] active:scale-95 shadow-lg shadow-premium-gold/20"
                         >
-                            Place Order with Tokens
+                            Place Order with Coins
                         </button>
                     </form>
                 </div>

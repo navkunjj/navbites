@@ -12,7 +12,7 @@ module.exports = async function(req, res, next) {
 
     try {
         // Verify token
-        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your_jwt_secret_key_here');
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret123');
         
         // Get user from database
         const user = await User.findById(decoded.user.id);

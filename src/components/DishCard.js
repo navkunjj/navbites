@@ -24,7 +24,7 @@ const DishCard = ({ title, description, price, rating, image, onOrder, onClick }
         <div className="flex flex-col flex-1 space-y-2">
             <div className="flex justify-between items-start gap-2">
                 <h3 className="text-lg md:text-xl font-serif font-bold text-white group-hover:text-premium-gold transition-colors line-clamp-1">{title}</h3>
-                <span className="text-premium-emerald font-bold whitespace-nowrap">{price} Tokens</span>
+                <span className="text-premium-emerald font-bold whitespace-nowrap">{price} Coins</span>
             </div>
             <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500 ease-in-out overflow-hidden">
                 <p className="text-sm text-gray-400 min-h-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">

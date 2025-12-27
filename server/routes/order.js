@@ -39,7 +39,7 @@ router.post('/', auth, async (req, res) => {
         res.json({ order: newOrder, tokens: user.tokens });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send(err.message);
     }
 });
 
@@ -52,7 +52,7 @@ router.get('/', auth, async (req, res) => {
         res.json(orders);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send(err.message);
     }
 });
 

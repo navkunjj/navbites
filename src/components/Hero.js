@@ -31,9 +31,9 @@ const Hero = () => {
              {/* Hero Image */}
              <div className="aspect-square rounded-full border border-white/10 flex items-center justify-center relative overflow-hidden pulse-animation group">
                 <img 
-                  src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80" 
+                  src="/images/hero_dish.png" 
                   alt="Premium Steak" 
-                  className="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-700 animate-float"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent rounded-full"></div>
                 

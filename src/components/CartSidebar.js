@@ -2,7 +2,7 @@ import React from 'react';
 
 const CartSidebar = ({ isOpen, onClose, cartItems, onRemove, onCheckout }) => {
     const total = cartItems.reduce((sum, item) => sum + (parseFloat(item.price) * (item.quantity || 1)), 0);
-    const currency = "Tokens";
+    const currency = "Coins";
 
     return (
         <>

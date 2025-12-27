@@ -5,12 +5,12 @@ const DishDetailModal = ({ dish, isOpen, onClose, onAddToCart }) => {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div 
+            <div
                 className="absolute inset-0 bg-black/90 backdrop-blur-md"
                 onClick={onClose}
             ></div>
             <div className="relative bg-premium-dark border border-white/10 rounded-3xl overflow-hidden max-w-4xl w-full shadow-2xl animate-in fade-in zoom-in duration-300">
-                <button 
+                <button
                     onClick={onClose}
                     className="absolute top-6 right-6 z-10 p-2 bg-black/50 hover:bg-black/80 rounded-full text-white transition-colors"
                 >
@@ -18,9 +18,9 @@ const DishDetailModal = ({ dish, isOpen, onClose, onAddToCart }) => {
                 </button>
                 <div className="flex flex-col md:flex-row h-full max-h-[90vh] overflow-y-auto">
                     <div className="w-full md:w-1/2 h-80 md:h-[600px] overflow-hidden">
-                        <img 
-                            src={dish.image} 
-                            alt={dish.title} 
+                        <img
+                            src={dish.image}
+                            alt={dish.title}
                             className="w-full h-full object-cover"
                         />
                     </div>
@@ -31,15 +31,15 @@ const DishDetailModal = ({ dish, isOpen, onClose, onAddToCart }) => {
                             <span className="text-gray-500 mx-2">|</span>
                             <span className="text-sm uppercase tracking-widest font-bold">{dish.category}</span>
                         </div>
-                        
+
                         <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-white">{dish.title}</h2>
-                        
+
                         <div className="space-y-6 mb-10 overflow-y-auto">
                             <div>
                                 <h4 className="text-premium-gold uppercase tracking-widest text-xs font-bold mb-2">Description</h4>
                                 <p className="text-gray-300 text-lg leading-relaxed">{dish.description}</p>
                             </div>
-                            
+
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
                                     <h4 className="text-gray-500 uppercase tracking-widest text-[10px] font-bold mb-1">Preparation</h4>
@@ -60,9 +60,9 @@ const DishDetailModal = ({ dish, isOpen, onClose, onAddToCart }) => {
                         <div className="mt-auto pt-8 border-t border-white/10 flex items-center justify-between">
                             <div>
                                 <p className="text-gray-500 text-xs uppercase tracking-widest mb-1 font-bold">Price per serving</p>
-                                <span className="text-3xl font-bold text-premium-emerald">{dish.price} Tokens</span>
+                                <span className="text-3xl font-bold text-premium-emerald">{dish.price} Coins</span>
                             </div>
-                            <button 
+                            <button
                                 onClick={() => {
                                     onAddToCart(dish);
                                     onClose();

@@ -22,7 +22,7 @@ const DishSchema = new mongoose.Schema({
     category: {
         type: String,
         required: true,
-        enum: ['All', 'Fine Dining', 'Steakhouse', 'Seafood', 'Desserts', 'Vegan', 'Asian Fusion', 'Italian'],
+        enum: ['All', 'Appetizers', 'Curries', 'Rice & Biryani', 'Street Food', 'Tandoor', 'South Indian', 'Fusion', 'Desserts', 'Beverages'],
     },
     image: {
         type: String,
@@ -31,21 +31,7 @@ const DishSchema = new mongoose.Schema({
     isActive: {
         type: Boolean,
         default: true,
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-    updatedAt: {
-        type: Date,
-        default: Date.now,
-    },
-});
-
-// Update the updatedAt timestamp before saving
-DishSchema.pre('save', function(next) {
-    this.updatedAt = Date.now();
-    next();
-});
+    }
+}, { timestamps: true });
 
 module.exports = mongoose.model('Dish', DishSchema);

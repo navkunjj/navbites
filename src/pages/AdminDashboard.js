@@ -16,7 +16,7 @@ const AdminDashboard = () => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         const storedUser = localStorage.getItem('user');
-        
+
         if (!token || !storedUser) {
             navigate('/admin/login');
             return;
@@ -35,7 +35,7 @@ const AdminDashboard = () => {
     const fetchData = async (token) => {
         try {
             const headers = { 'x-auth-token': token };
-            
+
             const [statsRes, ordersRes, usersRes, dishesRes] = await Promise.all([
                 fetch(`${API_URL}/api/admin/stats`, { headers }),
                 fetch(`${API_URL}/api/admin/orders`, { headers }),
@@ -138,7 +138,7 @@ const AdminDashboard = () => {
     };
 
     const [dishForm, setDishForm] = useState({
-        title: '', description: '', price: '', rating: '4.5', category: 'Fine Dining', image: ''
+        title: '', description: '', price: '', rating: '4.5', category: 'Appetizers', image: ''
     });
     const [editingDish, setEditingDish] = useState(null);
     const [showDishModal, setShowDishModal] = useState(false);
@@ -147,10 +147,10 @@ const AdminDashboard = () => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
-            const url = editingDish 
+            const url = editingDish
                 ? `${API_URL}/api/admin/dishes/${editingDish._id}`
                 : `${API_URL}/api/admin/dishes`;
-            
+
             const res = await fetch(url, {
                 method: editingDish ? 'PUT' : 'POST',
                 headers: {
@@ -171,7 +171,7 @@ const AdminDashboard = () => {
                 }
                 setShowDishModal(false);
                 setEditingDish(null);
-                setDishForm({ title: '', description: '', price: '', rating: '4.5', category: 'Fine Dining', image: '' });
+                setDishForm({ title: '', description: '', price: '', rating: '4.5', category: 'Appetizers', image: '' });
             }
         } catch (err) {
             showNotification('Error saving dish', 'error');
@@ -237,11 +237,10 @@ const AdminDashboard = () => {
                             <button
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
-                                className={`px-6 py-4 font-medium capitalize transition-all ${
-                                    activeTab === tab
+                                className={`px-6 py-4 font-medium capitalize transition-all ${activeTab === tab
                                         ? 'text-premium-gold border-b-2 border-premium-gold'
                                         : 'text-gray-400 hover:text-white'
-                                }`}
+                                    }`}
                             >
                                 {tab}
                             </button>
@@ -283,9 +282,8 @@ const AdminDashboard = () => {
                                             <div className="font-bold">{order.user?.name}</div>
                                             <div className="text-sm text-gray-400">{order.items.length} items • {order.totalTokens} Tokens</div>
                                         </div>
-                                        <div className={`px-3 py-1 rounded-full text-xs font-bold ${
-                                            order.status === 'Delivered' ? 'bg-premium-emerald/20 text-premium-emerald' : 'bg-premium-gold/20 text-premium-gold'
-                                        }`}>
+                                        <div className={`px-3 py-1 rounded-full text-xs font-bold ${order.status === 'Delivered' ? 'bg-premium-emerald/20 text-premium-emerald' : 'bg-premium-gold/20 text-premium-gold'
+                                            }`}>
                                             {order.status}
                                         </div>
                                     </div>
@@ -377,9 +375,8 @@ const AdminDashboard = () => {
                                                 <td className="px-6 py-4 text-sm text-gray-400">{user.email}</td>
                                                 <td className="px-6 py-4 text-sm font-bold text-premium-gold">{user.tokens}</td>
                                                 <td className="px-6 py-4">
-                                                    <span className={`px-3 py-1 rounded-full text-xs font-bold ${
-                                                        user.isActive ? 'bg-premium-emerald/20 text-premium-emerald' : 'bg-red-500/20 text-red-400'
-                                                    }`}>
+                                                    <span className={`px-3 py-1 rounded-full text-xs font-bold ${user.isActive ? 'bg-premium-emerald/20 text-premium-emerald' : 'bg-red-500/20 text-red-400'
+                                                        }`}>
                                                         {user.isActive ? 'Active' : 'Inactive'}
                                                     </span>
                                                 </td>
@@ -407,7 +404,7 @@ const AdminDashboard = () => {
                             <button
                                 onClick={() => {
                                     setEditingDish(null);
-                                    setDishForm({ title: '', description: '', price: '', rating: '4.5', category: 'Fine Dining', image: '' });
+                                    setDishForm({ title: '', description: '', price: '', rating: '4.5', category: 'Appetizers', image: '' });
                                     setShowDishModal(true);
                                 }}
                                 className="px-6 py-3 bg-premium-gold text-black font-bold rounded-xl hover:bg-yellow-500 transition-all"
@@ -471,7 +468,7 @@ const AdminDashboard = () => {
                                 <input
                                     type="text"
                                     value={dishForm.title}
-                                    onChange={(e) => setDishForm({...dishForm, title: e.target.value})}
+                                    onChange={(e) => setDishForm({ ...dishForm, title: e.target.value })}
                                     required
                                     className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-premium-gold/50"
                                 />
@@ -480,7 +477,7 @@ const AdminDashboard = () => {
                                 <label className="block text-sm font-medium mb-2">Description</label>
                                 <textarea
                                     value={dishForm.description}
-                                    onChange={(e) => setDishForm({...dishForm, description: e.target.value})}
+                                    onChange={(e) => setDishForm({ ...dishForm, description: e.target.value })}
                                     required
                                     rows="3"
                                     className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-premium-gold/50"
@@ -492,7 +489,7 @@ const AdminDashboard = () => {
                                     <input
                                         type="number"
                                         value={dishForm.price}
-                                        onChange={(e) => setDishForm({...dishForm, price: e.target.value})}
+                                        onChange={(e) => setDishForm({ ...dishForm, price: e.target.value })}
                                         required
                                         className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-premium-gold/50"
                                     />
@@ -505,7 +502,7 @@ const AdminDashboard = () => {
                                         min="0"
                                         max="5"
                                         value={dishForm.rating}
-                                        onChange={(e) => setDishForm({...dishForm, rating: e.target.value})}
+                                        onChange={(e) => setDishForm({ ...dishForm, rating: e.target.value })}
                                         className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-premium-gold/50"
                                     />
                                 </div>
@@ -514,16 +511,18 @@ const AdminDashboard = () => {
                                 <label className="block text-sm font-medium mb-2">Category</label>
                                 <select
                                     value={dishForm.category}
-                                    onChange={(e) => setDishForm({...dishForm, category: e.target.value})}
+                                    onChange={(e) => setDishForm({ ...dishForm, category: e.target.value })}
                                     className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-premium-gold/50"
                                 >
-                                    <option value="Fine Dining">Fine Dining</option>
-                                    <option value="Steakhouse">Steakhouse</option>
-                                    <option value="Seafood">Seafood</option>
+                                    <option value="Appetizers">Appetizers</option>
+                                    <option value="Curries">Curries</option>
+                                    <option value="Rice & Biryani">Rice & Biryani</option>
+                                    <option value="Street Food">Street Food</option>
+                                    <option value="Tandoor">Tandoor</option>
+                                    <option value="South Indian">South Indian</option>
+                                    <option value="Fusion">Fusion</option>
                                     <option value="Desserts">Desserts</option>
-                                    <option value="Vegan">Vegan</option>
-                                    <option value="Asian Fusion">Asian Fusion</option>
-                                    <option value="Italian">Italian</option>
+                                    <option value="Beverages">Beverages</option>
                                 </select>
                             </div>
                             <div>
@@ -531,7 +530,7 @@ const AdminDashboard = () => {
                                 <input
                                     type="url"
                                     value={dishForm.image}
-                                    onChange={(e) => setDishForm({...dishForm, image: e.target.value})}
+                                    onChange={(e) => setDishForm({ ...dishForm, image: e.target.value })}
                                     required
                                     placeholder="https://images.unsplash.com/..."
                                     className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-premium-gold/50"
@@ -559,9 +558,8 @@ const AdminDashboard = () => {
 
             {/* Notification */}
             <div className={`fixed bottom-8 right-8 z-60 transition-all duration-500 transform ${notification.show ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'}`}>
-                <div className={`px-6 py-3 rounded-full font-bold shadow-lg flex items-center gap-3 ${
-                    notification.type === 'success' ? 'bg-premium-emerald text-black' : 'bg-red-500 text-white'
-                }`}>
+                <div className={`px-6 py-3 rounded-full font-bold shadow-lg flex items-center gap-3 ${notification.type === 'success' ? 'bg-premium-emerald text-black' : 'bg-red-500 text-white'
+                    }`}>
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                     </svg>
