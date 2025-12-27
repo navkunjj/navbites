@@ -63,8 +63,8 @@ const Navbar = ({ cartCount, onCartClick, user, onLogout, searchTerm, onSearchCh
           {/* Mobile User Name - Centered */}
           {user && (
             <div className="md:hidden absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-              <span className="text-gray-400 text-xs mr-1">Hi,</span>
-              <span className="text-white font-bold text-sm">{user.name.split(' ')[0]}</span>
+              <span className="text-gray-400 text-xs mr-1">Welcome,</span>
+              <span className="text-white font-bold text-sm">{user.name}</span>
             </div>
           )}
 
