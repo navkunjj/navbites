@@ -23,7 +23,7 @@ const Navbar = ({ cartCount, onCartClick, user, onLogout, searchTerm, onSearchCh
   return (
     <nav className="fixed top-0 left-0 w-full z-[100] transition-all duration-300 glass border-b-0 backdrop-blur-md">
       <div className="container mx-auto px-6 py-4">
-        <div className="flex justify-between items-center gap-4">
+        <div className="flex justify-between items-center gap-4 relative">
           {/* Logo */}
           <div onClick={() => navigate('/')} className="text-2xl font-serif font-bold tracking-wider cursor-pointer z-[100] relative flex-shrink-0">
             <span className="text-premium-gold">NAV</span>
@@ -59,6 +59,14 @@ const Navbar = ({ cartCount, onCartClick, user, onLogout, searchTerm, onSearchCh
               Chefs
             </button>
           </div>
+
+          {/* Mobile User Name - Centered */}
+          {user && (
+            <div className="md:hidden absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+              <span className="text-gray-400 text-xs mr-1">Hi,</span>
+              <span className="text-white font-bold text-sm">{user.name.split(' ')[0]}</span>
+            </div>
+          )}
 
           {/* Right Side - Search, Cart, Auth */}
           <div className="flex items-center gap-3 flex-shrink-0">
@@ -192,6 +200,7 @@ const Navbar = ({ cartCount, onCartClick, user, onLogout, searchTerm, onSearchCh
           {user && (
             <div className="flex flex-col items-center space-y-4 pt-6 border-t border-white/10 w-64">
               <div className="flex flex-col items-center gap-2">
+                <span className="text-gray-400 text-sm">Welcome,</span>
                 <span className="text-premium-gold font-bold text-xl">{user.name}</span>
 
                 {/* Mobile Token Display */}
