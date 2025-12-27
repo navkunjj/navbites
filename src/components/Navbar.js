@@ -21,11 +21,11 @@ const Navbar = ({ cartCount, onCartClick, user, onLogout, searchTerm, onSearchCh
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 transition-all duration-300 glass border-b-0 backdrop-blur-md">
+    <nav className="fixed top-0 left-0 w-full z-[100] transition-all duration-300 glass border-b-0 backdrop-blur-md">
       <div className="container mx-auto px-6 py-4">
         <div className="flex justify-between items-center gap-4">
           {/* Logo */}
-          <div onClick={() => navigate('/')} className="text-2xl font-serif font-bold tracking-wider cursor-pointer z-50 relative flex-shrink-0">
+          <div onClick={() => navigate('/')} className="text-2xl font-serif font-bold tracking-wider cursor-pointer z-[100] relative flex-shrink-0">
             <span className="text-premium-gold">NAV</span>
             <span className="text-white">BITES</span>
           </div>
@@ -79,7 +79,7 @@ const Navbar = ({ cartCount, onCartClick, user, onLogout, searchTerm, onSearchCh
             {/* Cart Button */}
             <button
               onClick={onCartClick}
-              className="relative p-2 text-gray-300 hover:text-white transition-colors group z-50 flex-shrink-0"
+              className="relative p-2 text-gray-300 hover:text-white transition-colors group z-[100] flex-shrink-0"
             >
               <div className="border border-white/20 p-2 rounded-full hover:bg-white/10 transition-all">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -93,7 +93,6 @@ const Navbar = ({ cartCount, onCartClick, user, onLogout, searchTerm, onSearchCh
               )}
             </button>
 
-            {/* Desktop Auth */}
             {user ? (
               <div className="hidden md:flex items-center gap-3 flex-shrink-0">
                 <div className="flex items-center gap-2 px-3 py-1 bg-premium-gold/10 border border-premium-gold/30 rounded-full group transition-all">
@@ -121,7 +120,7 @@ const Navbar = ({ cartCount, onCartClick, user, onLogout, searchTerm, onSearchCh
             ) : (
               <button
                 onClick={() => navigate('/login')}
-                className="hidden md:block px-6 py-2 border border-premium-gold text-premium-gold hover:bg-premium-gold hover:text-black transition-all duration-300 rounded-full font-medium whitespace-nowrap"
+                className="px-4 py-1.5 md:px-6 md:py-2 border border-premium-gold text-premium-gold hover:bg-premium-gold hover:text-black transition-all duration-300 rounded-full font-medium whitespace-nowrap text-sm"
               >
                 Login
               </button>
@@ -130,7 +129,7 @@ const Navbar = ({ cartCount, onCartClick, user, onLogout, searchTerm, onSearchCh
             {/* Mobile Menu Button */}
             <button
               onClick={toggleMenu}
-              className="md:hidden p-2 text-white z-50 focus:outline-none flex-shrink-0"
+              className="md:hidden p-2 text-white z-[100] focus:outline-none flex-shrink-0"
             >
               {isMenuOpen ? (
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -147,7 +146,7 @@ const Navbar = ({ cartCount, onCartClick, user, onLogout, searchTerm, onSearchCh
       </div>
 
       {/* Mobile Menu Overlay */}
-      <div className={`fixed inset-0 bg-black/95 backdrop-blur-lg z-4000 transition-transform duration-300 md:hidden overflow-y-auto flex ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div className={`fixed inset-0 bg-black/95 backdrop-blur-lg z-[90] transition-transform duration-300 md:hidden overflow-y-auto flex ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="m-auto flex flex-col items-center w-full py-10 space-y-8">
           {/* Mobile Search */}
           <div className="flex items-center bg-white/5 border border-white/10 rounded-full px-4 py-3 focus-within:border-premium-gold/50 transition-all w-64">
@@ -190,7 +189,7 @@ const Navbar = ({ cartCount, onCartClick, user, onLogout, searchTerm, onSearchCh
             Chefs
           </button>
 
-          {user ? (
+          {user && (
             <div className="flex flex-col items-center space-y-4 pt-6 border-t border-white/10 w-64">
               <div className="flex flex-col items-center gap-2">
                 <span className="text-premium-gold font-bold text-xl">{user.name}</span>
@@ -216,13 +215,6 @@ const Navbar = ({ cartCount, onCartClick, user, onLogout, searchTerm, onSearchCh
                 Logout
               </button>
             </div>
-          ) : (
-            <button
-              onClick={() => { navigate('/login'); setIsMenuOpen(false); }}
-              className="mt-4 px-10 py-3 bg-premium-gold text-black font-bold rounded-full text-xl hover:scale-105 transition-transform"
-            >
-              Login
-            </button>
           )}
         </div>
       </div>
