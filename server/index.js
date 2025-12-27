@@ -8,7 +8,7 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cors({
-    origin: '*', // later replace with your frontend URL
+    origin: 'https://navbites-psi.vercel.app/', // later replace with your frontend URL
 }));
 
 
