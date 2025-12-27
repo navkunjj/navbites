@@ -147,82 +147,84 @@ const Navbar = ({ cartCount, onCartClick, user, onLogout, searchTerm, onSearchCh
       </div>
 
       {/* Mobile Menu Overlay */}
-      <div className={`fixed inset-0 bg-black/95 backdrop-blur-lg z-40 transition-transform duration-300 flex flex-col justify-start items-center space-y-6 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} md:hidden overflow-y-auto pt-28 pb-10`}>
-        {/* Mobile Search */}
-        <div className="flex items-center bg-white/5 border border-white/10 rounded-full px-4 py-3 focus-within:border-premium-gold/50 transition-all w-64 mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-          <input
-            type="text"
-            placeholder="Search dishes..."
-            className="bg-transparent border-none outline-none text-base text-white px-3 w-full placeholder:text-gray-500"
-            value={searchTerm}
-            onChange={(e) => onSearchChange(e.target.value)}
-          />
-        </div>
+      <div className={`fixed inset-0 bg-black/95 backdrop-blur-lg z-40 transition-transform duration-300 md:hidden overflow-y-auto flex ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className="m-auto flex flex-col items-center w-full py-10 space-y-8">
+          {/* Mobile Search */}
+          <div className="flex items-center bg-white/5 border border-white/10 rounded-full px-4 py-3 focus-within:border-premium-gold/50 transition-all w-64">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input
+              type="text"
+              placeholder="Search dishes..."
+              className="bg-transparent border-none outline-none text-base text-white px-3 w-full placeholder:text-gray-500"
+              value={searchTerm}
+              onChange={(e) => onSearchChange(e.target.value)}
+            />
+          </div>
 
-        <button
-          onClick={() => { handleCategoryClick(); setIsMenuOpen(false); }}
-          className="text-2xl text-white hover:text-premium-gold font-bold"
-        >
-          Menu Categories
-        </button>
-        {user && (
           <button
-            onClick={() => { navigate('/orders'); setIsMenuOpen(false); }}
+            onClick={() => { handleCategoryClick(); setIsMenuOpen(false); }}
             className="text-2xl text-white hover:text-premium-gold font-bold"
           >
-            My Orders
+            Menu Categories
           </button>
-        )}
-        <button
-          onClick={() => { navigate('/'); setIsMenuOpen(false); }}
-          className="text-2xl text-white hover:text-premium-gold font-bold"
-        >
-          Reservations
-        </button>
-        <button
-          onClick={() => { navigate('/'); setIsMenuOpen(false); }}
-          className="text-2xl text-white hover:text-premium-gold font-bold"
-        >
-          Chefs
-        </button>
-
-        {user ? (
-          <div className="flex flex-col items-center space-y-4 pt-6 border-t border-white/10 w-64">
-            <div className="flex flex-col items-center gap-2">
-              <span className="text-premium-gold font-bold text-xl">{user.name}</span>
-
-              {/* Mobile Token Display */}
-              <div className="flex items-center gap-2 px-4 py-2 bg-premium-gold/10 border border-premium-gold/30 rounded-full">
-                <span className="text-premium-gold font-bold">★</span>
-                <span className="text-lg font-bold text-premium-gold">{user.tokens || 0}</span>
-                <button
-                  onClick={() => { onTopUp(); setIsMenuOpen(false); }}
-                  className="ml-2 w-6 h-6 flex items-center justify-center bg-premium-gold text-black rounded-full text-sm font-bold hover:bg-yellow-500 transition-colors shadow-sm"
-                  title="Top up coins"
-                >
-                  +
-                </button>
-              </div>
-            </div>
-
+          {user && (
             <button
-              onClick={() => { onLogout(); setIsMenuOpen(false); }}
-              className="px-8 py-3 border border-white/20 text-white rounded-full hover:bg-white/10 w-full"
+              onClick={() => { navigate('/orders'); setIsMenuOpen(false); }}
+              className="text-2xl text-white hover:text-premium-gold font-bold"
             >
-              Logout
+              My Orders
             </button>
-          </div>
-        ) : (
+          )}
           <button
-            onClick={() => { navigate('/login'); setIsMenuOpen(false); }}
-            className="mt-4 px-10 py-3 bg-premium-gold text-black font-bold rounded-full text-xl hover:scale-105 transition-transform"
+            onClick={() => { navigate('/'); setIsMenuOpen(false); }}
+            className="text-2xl text-white hover:text-premium-gold font-bold"
           >
-            Login
+            Reservations
           </button>
-        )}
+          <button
+            onClick={() => { navigate('/'); setIsMenuOpen(false); }}
+            className="text-2xl text-white hover:text-premium-gold font-bold"
+          >
+            Chefs
+          </button>
+
+          {user ? (
+            <div className="flex flex-col items-center space-y-4 pt-6 border-t border-white/10 w-64">
+              <div className="flex flex-col items-center gap-2">
+                <span className="text-premium-gold font-bold text-xl">{user.name}</span>
+
+                {/* Mobile Token Display */}
+                <div className="flex items-center gap-2 px-4 py-2 bg-premium-gold/10 border border-premium-gold/30 rounded-full">
+                  <span className="text-premium-gold font-bold">★</span>
+                  <span className="text-lg font-bold text-premium-gold">{user.tokens || 0}</span>
+                  <button
+                    onClick={() => { onTopUp(); setIsMenuOpen(false); }}
+                    className="ml-2 w-6 h-6 flex items-center justify-center bg-premium-gold text-black rounded-full text-sm font-bold hover:bg-yellow-500 transition-colors shadow-sm"
+                    title="Top up coins"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              <button
+                onClick={() => { onLogout(); setIsMenuOpen(false); }}
+                className="px-8 py-3 border border-white/20 text-white rounded-full hover:bg-white/10 w-full"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => { navigate('/login'); setIsMenuOpen(false); }}
+              className="mt-4 px-10 py-3 bg-premium-gold text-black font-bold rounded-full text-xl hover:scale-105 transition-transform"
+            >
+              Login
+            </button>
+          )}
+        </div>
       </div>
     </nav>
   );
