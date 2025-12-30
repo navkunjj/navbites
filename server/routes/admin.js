@@ -4,6 +4,33 @@ const adminAuth = require('../middleware/adminAuth');
 const Order = require('../models/Order');
 const User = require('../models/User');
 const Dish = require('../models/Dish');
+const multer = require('multer');
+const path = require('path');
+
+// Configure Multer for local storage
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, `${Date.now()}${path.extname(file.originalname)}`);
+    }
+});
+
+const upload = multer({
+    storage,
+    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+    fileFilter: (req, file, cb) => {
+        const filetypes = /jpeg|jpg|png|webp/;
+        const mimetype = filetypes.test(file.mimetype);
+        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+        if (mimetype && extname) {
+            return cb(null, true);
+        }
+        cb(new Error('Only images are allowed!'));
+    }
+});
+
 
 // @route   GET api/admin/stats
 // @desc    Get dashboard statistics
@@ -13,10 +40,10 @@ router.get('/stats', adminAuth, async (req, res) => {
         const totalOrders = await Order.countDocuments();
         const totalUsers = await User.countDocuments({ role: 'user' });
         const totalDishes = await Dish.countDocuments({ isActive: true });
-        
+
         const orders = await Order.find();
         const totalRevenue = orders.reduce((sum, order) => sum + order.totalTokens, 0);
-        
+
         const recentOrders = await Order.find()
             .populate('user', 'name email')
             .sort({ date: -1 })
@@ -56,7 +83,7 @@ router.get('/orders', adminAuth, async (req, res) => {
 router.put('/orders/:id/status', adminAuth, async (req, res) => {
     try {
         const { status } = req.body;
-        
+
         const order = await Order.findById(req.params.id);
         if (!order) {
             return res.status(404).json({ msg: 'Order not found' });
@@ -67,7 +94,7 @@ router.put('/orders/:id/status', adminAuth, async (req, res) => {
 
         const updatedOrder = await Order.findById(req.params.id)
             .populate('user', 'name email');
-        
+
         res.json(updatedOrder);
     } catch (err) {
         console.error(err.message);
@@ -126,7 +153,7 @@ router.get('/users/:id', adminAuth, async (req, res) => {
         }
 
         const orders = await Order.find({ user: req.params.id }).sort({ date: -1 });
-        
+
         res.json({ user, orders });
     } catch (err) {
         console.error(err.message);
@@ -140,7 +167,7 @@ router.get('/users/:id', adminAuth, async (req, res) => {
 router.put('/users/:id', adminAuth, async (req, res) => {
     try {
         const { name, email, tokens, isActive } = req.body;
-        
+
         const user = await User.findById(req.params.id);
         if (!user) {
             return res.status(404).json({ msg: 'User not found' });
@@ -152,7 +179,7 @@ router.put('/users/:id', adminAuth, async (req, res) => {
         if (isActive !== undefined) user.isActive = isActive;
 
         await user.save();
-        
+
         const updatedUser = await User.findById(req.params.id).select('-password');
         res.json(updatedUser);
     } catch (err) {
@@ -224,7 +251,7 @@ router.post('/dishes', adminAuth, async (req, res) => {
 router.put('/dishes/:id', adminAuth, async (req, res) => {
     try {
         const { title, description, price, rating, category, image, isActive } = req.body;
-        
+
         const dish = await Dish.findById(req.params.id);
         if (!dish) {
             return res.status(404).json({ msg: 'Dish not found' });
@@ -258,6 +285,21 @@ router.delete('/dishes/:id', adminAuth, async (req, res) => {
 
         await Dish.findByIdAndDelete(req.params.id);
         res.json({ msg: 'Dish deleted successfully' });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send(err.message);
+    }
+});
+
+// @route   POST api/admin/dishes/upload
+// @desc    Upload dish image
+// @access  Private (Admin)
+router.post('/dishes/upload', adminAuth, upload.single('image'), (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ msg: 'Please upload a file' });
+        }
+        res.json({ imageUrl: `/uploads/${req.file.filename}` });
     } catch (err) {
         console.error(err.message);
         res.status(500).send(err.message);

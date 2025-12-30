@@ -142,6 +142,40 @@ const AdminDashboard = () => {
     });
     const [editingDish, setEditingDish] = useState(null);
     const [showDishModal, setShowDishModal] = useState(false);
+    const [uploading, setUploading] = useState(false);
+
+    const handleImageUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        setUploading(true);
+        try {
+            const token = localStorage.getItem('token');
+            const formData = new FormData();
+            formData.append('image', file);
+
+            const res = await fetch(`${API_URL}/api/admin/dishes/upload`, {
+                method: 'POST',
+                headers: {
+                    'x-auth-token': token
+                },
+                body: formData
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                setDishForm({ ...dishForm, image: data.imageUrl });
+                showNotification('Image uploaded successfully');
+            } else {
+                showNotification('Error uploading image', 'error');
+            }
+        } catch (err) {
+            console.error('Upload error:', err);
+            showNotification('Error uploading image', 'error');
+        } finally {
+            setUploading(false);
+        }
+    };
 
     const handleDishSubmit = async (e) => {
         e.preventDefault();
@@ -151,13 +185,18 @@ const AdminDashboard = () => {
                 ? `${API_URL}/api/admin/dishes/${editingDish._id}`
                 : `${API_URL}/api/admin/dishes`;
 
+            const submissionData = { ...dishForm };
+            if (!submissionData.image || submissionData.image.trim() === '') {
+                delete submissionData.image; // Let the backend use the default
+            }
+
             const res = await fetch(url, {
                 method: editingDish ? 'PUT' : 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'x-auth-token': token
                 },
-                body: JSON.stringify(dishForm)
+                body: JSON.stringify(submissionData)
             });
 
             if (res.ok) {
@@ -238,8 +277,8 @@ const AdminDashboard = () => {
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
                                 className={`px-6 py-4 font-medium capitalize transition-all ${activeTab === tab
-                                        ? 'text-premium-gold border-b-2 border-premium-gold'
-                                        : 'text-gray-400 hover:text-white'
+                                    ? 'text-premium-gold border-b-2 border-premium-gold'
+                                    : 'text-gray-400 hover:text-white'
                                     }`}
                             >
                                 {tab}
@@ -416,7 +455,11 @@ const AdminDashboard = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {dishes.map((dish) => (
                                 <div key={dish._id} className="bg-premium-dark border border-white/10 rounded-2xl overflow-hidden hover:border-premium-gold/30 transition-all">
-                                    <img src={dish.image} alt={dish.title} className="w-full h-48 object-cover" />
+                                    <img
+                                        src={dish.image.startsWith('/uploads') ? `${API_URL}${dish.image}` : dish.image}
+                                        alt={dish.title}
+                                        className="w-full h-48 object-cover"
+                                    />
                                     <div className="p-4">
                                         <h3 className="font-bold text-lg mb-2">{dish.title}</h3>
                                         <p className="text-gray-400 text-sm mb-3 line-clamp-2">{dish.description}</p>
@@ -526,15 +569,59 @@ const AdminDashboard = () => {
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium mb-2">Image URL</label>
-                                <input
-                                    type="url"
-                                    value={dishForm.image}
-                                    onChange={(e) => setDishForm({ ...dishForm, image: e.target.value })}
-                                    required
-                                    placeholder="https://images.unsplash.com/..."
-                                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-premium-gold/50"
-                                />
+                                <label className="block text-sm font-medium mb-2">Dish Image</label>
+                                <div className="space-y-4">
+                                    <div className="flex gap-4 items-center">
+                                        <div className="flex-1">
+                                            <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={handleImageUpload}
+                                                className="hidden"
+                                                id="dish-image-upload"
+                                            />
+                                            <label
+                                                htmlFor="dish-image-upload"
+                                                className="flex items-center justify-center px-4 py-3 bg-white/5 border border-dashed border-white/20 rounded-xl cursor-pointer hover:bg-white/10 transition-all text-sm group"
+                                            >
+                                                {uploading ? (
+                                                    <span className="flex items-center gap-2">
+                                                        <div className="w-4 h-4 border-2 border-white/30 border-t-white animate-spin rounded-full"></div>
+                                                        Uploading...
+                                                    </span>
+                                                ) : (
+                                                    <span className="group-hover:text-premium-gold">Choose photo from device</span>
+                                                )}
+                                            </label>
+                                        </div>
+                                        <div className="text-gray-500 font-bold uppercase tracking-widest text-[10px]">OR</div>
+                                        <div className="flex-[2]">
+                                            <input
+                                                type="url"
+                                                value={dishForm.image}
+                                                onChange={(e) => setDishForm({ ...dishForm, image: e.target.value })}
+                                                placeholder="Enter image URL"
+                                                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-premium-gold/50 text-sm"
+                                            />
+                                        </div>
+                                    </div>
+                                    {dishForm.image && (
+                                        <div className="relative w-full h-40 rounded-xl overflow-hidden border border-white/10">
+                                            <img
+                                                src={dishForm.image.startsWith('/uploads') ? `${API_URL}${dishForm.image}` : dishForm.image}
+                                                alt="Preview"
+                                                className="w-full h-full object-cover"
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => setDishForm({ ...dishForm, image: '' })}
+                                                className="absolute top-2 right-2 p-1.5 bg-black/60 hover:bg-black rounded-full text-white transition-colors"
+                                            >
+                                                ✕
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                             <div className="flex gap-4 pt-4">
                                 <button

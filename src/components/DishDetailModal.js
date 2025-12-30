@@ -1,4 +1,5 @@
 import React from 'react';
+import { API_URL } from '../config';
 
 const DishDetailModal = ({ dish, isOpen, onClose, onAddToCart }) => {
     if (!isOpen || !dish) return null;
@@ -19,7 +20,7 @@ const DishDetailModal = ({ dish, isOpen, onClose, onAddToCart }) => {
                 <div className="flex flex-col md:flex-row h-full max-h-[90vh] overflow-y-auto">
                     <div className="w-full md:w-1/2 h-80 md:h-[600px] overflow-hidden">
                         <img
-                            src={dish.image}
+                            src={dish.image ? (dish.image.startsWith('/uploads') ? `${API_URL}${dish.image}` : dish.image) : 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=80'}
                             alt={dish.title}
                             className="w-full h-full object-cover"
                         />
