@@ -42,7 +42,7 @@ const indianDishes = [
         price: 25,
         rating: 4.8,
         category: "Street Food",
-        image: "/dishes/pani_puri.png"
+        image: "/dishes/pani-puri-platter.png"
     },
     {
         title: "Masala Dosa",
@@ -50,7 +50,7 @@ const indianDishes = [
         price: 40,
         rating: 4.7,
         category: "South Indian",
-        image: "/dishes/masala_dosa.png"
+        image: "/dishes/masala-dosa.png"
     },
     {
         title: "Gulab Jamun",
@@ -58,7 +58,7 @@ const indianDishes = [
         price: 28,
         rating: 4.9,
         category: "Desserts",
-        image: "/dishes/gulab_jamun.png"
+        image: "/dishes/gulab-jamun.png"
     },
     {
         title: "Vegetable Samosa",
@@ -66,7 +66,7 @@ const indianDishes = [
         price: 18,
         rating: 4.6,
         category: "Appetizers",
-        image: "/dishes/veg_samosa.png"
+        image: "/dishes/vegetable-samosa.png"
     },
     {
         title: "Tandoori Lamb Chops",
@@ -86,7 +86,7 @@ const indianDishes = [
     }
 ];
 
-const seedIndianMenu = async () => {
+const seedMenu = async () => {
     try {
         const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/food_delivery_db';
         await mongoose.connect(MONGO_URI);
@@ -96,20 +96,20 @@ const seedIndianMenu = async () => {
         await Dish.deleteMany({});
         console.log('🗑️  Cleared existing dishes');
 
-        // Insert new Indian dishes
+        // Insert new dishes
         await Dish.insertMany(indianDishes);
-        console.log(`✅ Added ${indianDishes.length} Indian dishes with local images`);
+        console.log(`✅ Added ${indianDishes.length} dishes to the menu.`);
 
-        // Check for Admin user
+        // Check/Seed Admin User (Optional but useful for a full reset)
         const adminEmail = 'admin@navbites.com';
-        const admin = await User.findOne({ email: adminEmail });
-        if (admin) {
-            console.log('ℹ️  Admin user exists');
+        const adminExists = await User.findOne({ email: adminEmail });
+        if (adminExists) {
+            console.log('ℹ️  Admin user already exists');
         } else {
-            console.log('⚠️  Admin user not found');
+            console.log('⚠️  Admin user not found. You may need to run reset_admin.js if login fails.');
         }
 
-        console.log('\n🎉 Menu updated to Indian Cuisine (Local Images)!');
+        console.log('\n🎉 Menu successfully seeded!');
         process.exit(0);
     } catch (err) {
         console.error('❌ Error seeding database:', err);
@@ -117,4 +117,4 @@ const seedIndianMenu = async () => {
     }
 };
 
-seedIndianMenu();
+seedMenu();
