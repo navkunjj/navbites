@@ -1,4 +1,5 @@
 import React from 'react';
+import { Instagram, Twitter, Facebook, Linkedin, Github } from 'lucide-react';
 
 const Footer = () => {
     return (
@@ -15,12 +16,22 @@ const Footer = () => {
                             Experience the finest culinary masterpieces delivered directly to your doorstep. Elevating home dining to an art form.
                         </p>
                         <div className="flex space-x-4 pt-2">
-                             {/* Social Placeholders */}
-                             {['twitter', 'facebook', 'instagram', 'linkedin'].map(social => (
-                                 <div key={social} className="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-premium-gold hover:text-black transition-all cursor-pointer">
-                                     <span className="capitalize text-xs">{social[0]}</span>
-                                 </div>
-                             ))}
+                            {[
+                                { icon: <Instagram size={18} />, url: 'https://instagram.com/navkunj' },
+                                { icon: <Twitter size={18} />, url: 'https://twitter.com/navkunj' },
+                                { icon: <Facebook size={18} />, url: 'https://facebook.com/navkunj' },
+                                { icon: <Linkedin size={18} />, url: 'https://linkedin.com/in/navkunj' }
+                            ].map((social, index) => (
+                                <a
+                                    key={index}
+                                    href={social.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-premium-gold hover:text-black transition-all cursor-pointer border border-white/5"
+                                >
+                                    {social.icon}
+                                </a>
+                            ))}
                         </div>
                     </div>
 
@@ -53,9 +64,9 @@ const Footer = () => {
                         <h4 className="text-white font-bold uppercase tracking-widest mb-6">Newsletter</h4>
                         <p className="text-gray-400 mb-4">Subscribe for exclusive offers and seasonal menu updates.</p>
                         <div className="flex flex-col space-y-3">
-                            <input 
-                                type="email" 
-                                placeholder="Your email address" 
+                            <input
+                                type="email"
+                                placeholder="Your email address"
                                 className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-premium-gold transition-colors"
                             />
                             <button className="bg-premium-gold text-black font-bold py-3 rounded-lg hover:bg-yellow-500 transition-colors">
