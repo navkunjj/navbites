@@ -83,6 +83,14 @@ const indianDishes = [
         rating: 4.8,
         category: "Beverages",
         image: "/dishes/mango-lassi.jpg"
+    },
+    {
+        title: "Mango",
+        description: "Refreshing yogurt-based drink blended with sweet alphonso mango pulp and cardamom.",
+        price: 20,
+        rating: 4.8,
+        category: "Beverages",
+        image: "/dishes/mango-lassi.jpg"
     }
 ];
 
