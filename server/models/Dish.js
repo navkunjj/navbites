@@ -26,7 +26,7 @@ const DishSchema = new mongoose.Schema({
     },
     image: {
         type: String,
-        required: true,
+        default: '/dishes/default_dish.png',
     },
     isActive: {
         type: Boolean,
