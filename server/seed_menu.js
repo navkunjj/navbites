@@ -74,7 +74,7 @@ const indianDishes = [
         price: 85,
         rating: 5.0,
         category: "Tandoor",
-        image: "/dishes/lamb_chops.png"
+        image: "/dishes/tandoori-lamb-chops.png"
     },
     {
         title: "Mango Lassi",
@@ -82,7 +82,7 @@ const indianDishes = [
         price: 20,
         rating: 4.8,
         category: "Beverages",
-        image: "/dishes/mango_lassi.png"
+        image: "/dishes/mango-lassi.jpg"
     }
 ];
 
