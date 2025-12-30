@@ -597,7 +597,7 @@ const AdminDashboard = () => {
                                         <div className="text-gray-500 font-bold uppercase tracking-widest text-[10px]">OR</div>
                                         <div className="flex-[2]">
                                             <input
-                                                type="url"
+                                                type="text"
                                                 value={dishForm.image}
                                                 onChange={(e) => setDishForm({ ...dishForm, image: e.target.value })}
                                                 placeholder="Enter image URL"
