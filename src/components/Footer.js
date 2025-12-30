@@ -17,7 +17,7 @@ const Footer = () => {
                         </p>
                         <div className="flex space-x-4 pt-2">
                             {[
-                                { icon: <Instagram size={18} />, url: 'https://instagram.com/navkunj' },
+                                { icon: <Instagram size={18} />, url: 'https://instagram.com/navkunjj' },
                                 { icon: <Twitter size={18} />, url: 'https://twitter.com/navkunj' },
                                 { icon: <Facebook size={18} />, url: 'https://facebook.com/navkunj' },
                                 { icon: <Linkedin size={18} />, url: 'https://linkedin.com/in/navkunj' }
